@@ -13,7 +13,9 @@ public class Hack101 {
 
     Scanner in = new Scanner(System.in);
     LeafNode leafNode = new LeafNode();
-    public void problem1(){
+    
+    public void lectureNotes(){
+        
         int n = in.nextInt();
         int k = in.nextInt();
         String s = in.next();
@@ -44,7 +46,7 @@ public class Hack101 {
             System.out.println("NO");
     }
 
-    public void problem2(){
+    public void washingPlates(){
         int n = in.nextInt();
         int k = in.nextInt();
         long[] p = new long[n];
@@ -64,7 +66,7 @@ public class Hack101 {
         System.out.println(sum>0?sum:0l);
     }
     
-    public void problem3(){
+    public void forestGame(){
         LeafNode head,temp;
         int num = in.nextInt();
         int leaf[] = new int[num];
@@ -88,9 +90,9 @@ public class Hack101 {
     }
     public static void main(String[] args) {
         Hack101 hack101 = new Hack101();
-        hack101.problem1();
-        hack101.problem2();
-        hack101.problem3();
+        hack101.lectureNotes();
+        hack101.washingPlates();
+        hack101.forestGame();
     }
     
 }
