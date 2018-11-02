@@ -2,9 +2,11 @@
 package hack101;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 class LinkList{
     char ch;
@@ -81,85 +83,6 @@ public class WorldCodeSprint {
         }
     }
     
-    
-    public void trainTrack(){
-        int row = in.nextInt();
-        int col = in.nextInt();
-        int track = in.nextInt();
-        int sum=0;
-        int mat[][]=new int[track][3];
-        for(int i=0;i<track;i++){
-            System.out.println("Enter three seperated values:-");
-            int rowNo=in.nextInt();
-            int start= in.nextInt();
-            int end=in.nextInt();
-            mat[i][0]=rowNo;
-            mat[i][1]=start;
-            mat[i][2]=end;
-            /*int diff = Math.abs(start-end);
-            sum=sum+diff+1;*/
-        }
-        
-        /*for(int i=0;i<track;i++){
-            System.out.print("\n");
-            for(int j=0;j<3;j++)
-                System.out.print(" "+mat[i][j]);
-        }*/
-        int result[] = new int[2];
-        result[0]=0;
-        result[1]=0;
-        int temp;
-        
-        for(int i=0;i<track;i++){
-            temp=mat[i][0];
-            if(mat[i][0]!=-1){
-                //System.out.println("\ni:"+i);
-                for(int j=i;j<track;j++){
-                   // System.out.println("mati["+i+"][0]:-"+mat[i][0]);
-                   // System.out.println("matj["+j+"][0]:-"+mat[j][0]);
-                    
-                    if(temp==mat[j][0]){
-                       // System.out.println("j:"+j);
-                        mat[j][0]=-1;
-                        int diff = Math.abs(mat[j][1]-mat[j][2])+1;
-                        System.out.println("dif:-"+diff);
-                        if(result[0]==0){
-                            result[0]=diff;
-                            System.out.println("diff if:-"+result[0]);
-                        }
-                        else{
-                            result[0]=result[0]+diff;
-                            System.out.println("dif2:-"+result[0]);
-                            if(result[0]==col){
-                                result[0]=result[0];
-                                System.out.println("diff if2:-"+result[0]);
-                            }
-                            else if(result[0]>col){
-                                result[0]=col;
-                                System.out.println("diff if3:-"+result[0]);
-                            }
-                            else if(result[1]>diff){
-                                
-                                result[0] = result[0]+(result[0]-diff);
-                                System.out.println("diff if36:-"+result[0]);
-                            }
-                            else{
-                                //result[0]=diff;
-                                System.out.println("diff if4:-"+result[0]);
-                            }
-                        }
-                    }
-                }
-                
-            }
-            result[1]=result[1]+result[0];
-            result[0]=0;
-        }
-        System.out.println("result:-"+result[1]);
-        int lamp=(row*col)-result[1];
-        System.out.println("lamp:-"+lamp);
-    }
-    
     public void train(){
         int row = in.nextInt();
         int col = in.nextInt();
@@ -181,38 +104,47 @@ public class WorldCodeSprint {
                 System.out.print(" "+mat[i][j]);
         }
         
-        int startPoint[] = new int[track];
-        int endPoint[] = new int[track];
         int temp;
         int k=0;
         int inc=0;
         for(int i=0;i<track;i++){
-            ArrayList<Integer> arr = new ArrayList<>();
-            System.out.println("yo");
+            ArrayList<Integer> startList = new ArrayList<>();
+            ArrayList<Integer> endList = new ArrayList<>();
             temp=mat[i][0];
             if(mat[i][0]!=-1){
                 for(int j=i;j<track;j++){
                     if(temp==mat[j][0]){
                         mat[j][0]=-1;
-                        startPoint[k]=mat[j][1];
-                        endPoint[k]=mat[j][2];
-                        k++;
+                        startList.add(mat[j][1]);
+                        endList.add(mat[j][2]);
                     }
                 }
-                for(int n=0;n<track;n++){
-                    if(Math.abs(startPoint[n]-endPoint[n])==1){
-                        arr.add(startPoint[n]);
-                        arr.add(endPoint[n]);
+                ArrayList<Integer> arr = new ArrayList<>();
+                Set<Integer> set = new HashSet<>();
+                for(int n=0;n<startList.size();n++){
+                    if(Math.abs(startList.get(n)-endList.get(n))==1){
+                        arr.add(startList.get(n));
+                        arr.add(endList.get(n));
                     }
-                    else if(Math.abs(startPoint[n]-endPoint[n])>1){
-                        for(int begin=startPoint[n]+1;begin<=endPoint[n]-1;begin++)
+                    else if(Math.abs(startList.get(n)-endList.get(n))>1){
+                        for(int begin=startList.get(n)+1;begin<=endList.get(n)-1;begin++)
                             arr.add(begin);
-                        arr.add(startPoint[n]);
-                        arr.add(endPoint[n]);
+                        arr.add(startList.get(n));
+                        arr.add(endList.get(n));
+                    }
+                    else if(Math.abs(startList.get(n)-endList.get(n))==0){
+                        arr.add(startList.get(n));
                     }
                 }
                 System.out.println("result:-"+arr);
+                for(int size=0;size<arr.size();size++)
+                    set.add(arr.get(size));
+                System.out.println("set:-"+set);
+                sum= sum+set.size();
+                System.out.println("sum:-"+sum);
             }
         }
+        int lamp = (row*col)-sum;
+        System.out.println("lamp:-"+lamp);
     }
 }
